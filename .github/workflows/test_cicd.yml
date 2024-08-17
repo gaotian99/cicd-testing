@@ -19,8 +19,8 @@ jobs:
       }}
     outputs:
       version_number: ${{ env.version }}
-    permissions:
-      contents: write
+#    permissions:
+#      contents: write
       
     steps:
     
