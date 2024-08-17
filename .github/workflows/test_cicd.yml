@@ -27,7 +27,8 @@ jobs:
     - name: build-package
       run: |
         mkdir target
-        echo 'not a real jar' > target/cicd-testing-v1-1.0.3-mule-application.jar        
+        echo 'not a real jar' > target/cicd-testing-v1-1.0.3-mule-application.jar
+        echo "Extracted version: $VERSION"
     - name: deploy-to-dev
       run: |
         ls target/
