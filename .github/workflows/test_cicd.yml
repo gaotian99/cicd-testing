@@ -64,9 +64,9 @@ jobs:
     #     ls target/
     #     echo 'Deployment to DEV is successful!'
     
-    - name: get-pr-information
-      uses: 8BitJonny/gh-get-current-pr@2.2.0
-      id: PR      
+    # - name: get-pr-information
+    #   uses: 8BitJonny/gh-get-current-pr@2.2.0
+    #   id: PR      
 
     # - name: 'Get semver based on pr label'
     #   id: semver1
@@ -113,7 +113,7 @@ jobs:
     #       gh auth login --with-token
     #       gh auth status
 
-    - name: Create-release-${{github.ref_name}}
+    - name: Create-release-${{github.ref_name}}- ${{ env.ENVIRONMENT }}
       env:
 #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #        GITHUB_REF_NAME: ${{ github.ref_name }}
