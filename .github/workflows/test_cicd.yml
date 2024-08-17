@@ -1,0 +1,35 @@
+name: deployment-dev
+on:
+  push:
+   branches:
+    - develop
+
+jobs:
+  deployment:
+    name: build-and-deploy-project
+    runs-on: ubuntu-latest
+    environment: DEV
+    
+    steps:
+    
+    - name: checkout
+      uses: actions/checkout@v4.1.0
+    - name: maven version
+      run: |
+        mvn --version
+    - name: Installxmllint
+      run: |
+        apt-get install -y libxml2-utils
+    - name: ExtractversionfromXML
+      run: |
+        VERSION=$(xmllint --xpath "string(//*[local-name()='project']/*[local-name()='version'])" pom.xml)
+        echo "Extracted version: $VERSION"
+    - name: build-package
+      run: |
+        mkdir target
+        echo 'not a real jar' > target/cicd-testing-v1-1.0.3-mule-application.jar        
+    - name: deploy-to-dev
+      run: |
+        ls target/
+        echo 'Deployment to DEV is successful!'
+        
