@@ -33,7 +33,7 @@ jobs:
     - name: Replaceenvironmentvariablesinfile
       run: |
           echo "Replacing API_URL in config.json"
-          sed -i 's#\${{API_URL}}#'"${{ secrets.API_URL }}"'#g' config.json
+          sed -i 's#\${API_URL}#'"${{ secrets.API_URL }}"'#g' config.json
           
     - name: Showupdatedconfig
       run: cat config.json
