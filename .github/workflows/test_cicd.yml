@@ -36,6 +36,9 @@ jobs:
     #     VERSION=$(xmllint --xpath "string(//*[local-name()='project']/*[local-name()='version'])" pom.xml)
     #     echo "Extracted version: $VERSION"
     #     echo "version=$VERSION" >> $GITHUB_ENV
+
+    - run: echo "version=1.0.0" >> $GITHUB_ENV
+    
     - name: Replaceenvironmentvariablesinfile
       run: |
           echo "Replacing API_URL in config.json"
@@ -55,9 +58,10 @@ jobs:
       run: |
         ls target/
         echo 'Deployment to DEV is successful!'
-    - name: get-pr-information
-      uses: 8BitJonny/gh-get-current-pr@2.2.0
-      id: PR      
+    # - name: get-pr-information
+    #   uses: 8BitJonny/gh-get-current-pr@2.2.0
+    #   id: PR      
+
     # - name: 'Get semver based on pr label'
     #   id: semver1
     #   uses: "snsinahub-org/semver@v3.0.0"
@@ -73,26 +77,36 @@ jobs:
     # - name: 'print version'
     #   run: |
     #     echo ${{ steps.semver1.outputs.version }}
-    - name: create-release
-      id: create_release
-      uses: actions/create-release@v1
+
+    # - name: create-release
+    #   id: create_release
+    #   uses: actions/create-release@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     release_name: Release v1.0.0
+    #     body: |
+    #       ${{ steps.PR.outputs.pr_body }}
+    #     tag_name: ${{ github.ref }}
+    #     draft: false
+    #     prerelease: false
+    # - name: Upload Release Asset
+    #   id: upload-release-asset 
+    #   uses: actions/upload-release-asset@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     upload_url: ${{ steps.create_release.outputs.upload_url }} 
+    #     asset_path: target/*.jar
+    - name: Create release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        release_name: Release v1.0.0
-        body: |
-          ${{ steps.PR.outputs.pr_body }}
-        tag_name: ${{ github.ref }}
-        draft: false
-        prerelease: false
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: target/*.jar
+        GITHUB_REF_NAME: ${{ github.ref_name }}
+      run: |
+        gh release create "$GITHUB_REF_NAME" \
+            "target/cicd-testing-v1-${{ env.version }}-mule-application.jar"
+            --title="${{ env.version }}" \
+            --generate-notes
 
   release:
     runs-on: ubuntu-latest
