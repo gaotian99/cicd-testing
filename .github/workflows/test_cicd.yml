@@ -17,6 +17,8 @@ jobs:
       || github.ref_name == 'cicd-sit' && 'SIT'
       || github.ref_name == 'cicd-prod' && 'PROD'
       }}
+    outputs:
+      version_number: ${{ env.version }}
     
     steps:
     
