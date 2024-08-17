@@ -55,4 +55,11 @@ jobs:
       run: |
         ls target/
         echo 'Deployment to DEV is successful!'
+  release:
+    runs-on: ubuntu-latest
+    if: ${{ vars.ENV == 'DEV' }}
+    needs: deployment
+    environment: dev
+    steps:
+      - run: echo 'Release ${{ needs.deployment.outputs.version_number }} to ${{ vars.ENV }} is successful!'
         
