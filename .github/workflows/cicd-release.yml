@@ -12,6 +12,7 @@ on:
 
 jobs:
   release:
+    name: post-jar-to-release-page
     runs-on: ubuntu-latest
     environment:  ${{ inputs.environment }}
     permissions:
