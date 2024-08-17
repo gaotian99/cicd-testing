@@ -19,7 +19,9 @@ jobs:
       }}
     outputs:
       version_number: ${{ env.version }}
-    
+    permissions:
+      contents: write
+      
     steps:
     
     - name: checkout
