@@ -1,31 +1,35 @@
 name: deployment-dev
 on:
   push:
-   branches:
-    - develop
 
 jobs:
   deployment:
     name: build-and-deploy-project
     runs-on: ubuntu-latest
-    environment: DEV
+    environment: |-
+      ${{
+         github.ref_name == 'develop' && 'DEV'
+      || github.ref_name == 'cicd-qa'    && 'QA'
+      || github.ref_name == 'cicd-sit'    && 'SIT'
+      ||                                'PROD'
+      }}
     
     steps:
     
     - name: checkout
       uses: actions/checkout@v4.1.0
-    - name: maven version
-      run: |
-        mvn --version
-    - name: Installxmllint
-      run: |
-        sudo apt-get install -y libxml2-utils
-    - name: ExtractversionfromXML
-      id: app_version
-      run: |
-        VERSION=$(xmllint --xpath "string(//*[local-name()='project']/*[local-name()='version'])" pom.xml)
-        echo "Extracted version: $VERSION"
-        echo "version=$VERSION" >> $GITHUB_ENV
+    # - name: maven version
+    #   run: |
+    #     mvn --version
+    # - name: Installxmllint
+    #   run: |
+    #     sudo apt-get install -y libxml2-utils
+    # - name: ExtractversionfromXML
+    #   id: app_version
+    #   run: |
+    #     VERSION=$(xmllint --xpath "string(//*[local-name()='project']/*[local-name()='version'])" pom.xml)
+    #     echo "Extracted version: $VERSION"
+    #     echo "version=$VERSION" >> $GITHUB_ENV
     - name: build-package
       run: |
         mkdir target
