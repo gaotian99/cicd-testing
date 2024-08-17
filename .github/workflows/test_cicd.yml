@@ -113,13 +113,14 @@ jobs:
     #       gh auth login --with-token
     #       gh auth status
 
-    - name: Create release
+    - name: Create-release-${{github.ref_name}}
       env:
 #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #        GITHUB_REF_NAME: ${{ github.ref_name }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-         gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "${{ env.version }}" --notes "${{ steps.PR.outputs.pr_body }}"    
+        echo v${{ env.version }}
+#         gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "${{ env.version }}" --notes "${{ steps.PR.outputs.pr_body }}"    
 #        gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "Init Release" --generate-notes
         
     # - name: Generate Changelog
