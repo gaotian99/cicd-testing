@@ -1,0 +1,1 @@
+{"apiUrl1":"${{ secrets.API_URL }}","apiUrl2":"${{ API_URL }}","timeout":30}
