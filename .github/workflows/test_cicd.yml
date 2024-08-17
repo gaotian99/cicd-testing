@@ -56,6 +56,8 @@ jobs:
         echo "Extracted version: $VERSION"
         echo "new...."
         echo "The version extracted from XML is ${{ env.version }}"
+        mkdir staging
+        cp target/*.jar staging
 
     # - name: deploy-to-dev
     #   run: |
