@@ -55,6 +55,43 @@ jobs:
       run: |
         ls target/
         echo 'Deployment to DEV is successful!'
+    - name: get-pr-information
+      uses: 8BitJonny/gh-get-current-pr@2.2.0
+      id: PR      
+    # - name: 'Get semver based on pr label'
+    #   id: semver1
+    #   uses: "snsinahub-org/semver@v3.0.0"
+    #   with:
+    #     type: "${{ steps.PR.outputs.pr_labels }}"
+    #     prefix: '' 
+    #     body: ${{ steps.PR.outputs.pr_body }}  
+    #     create-release: 'yes'
+    #     prerelease: 'no'
+    #     exit-on-missing-type: 'no'
+    #     files: |
+    #         target/*.jar
+    # - name: 'print version'
+    #   run: |
+    #     echo ${{ steps.semver1.outputs.version }}
+    - name: create-release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        release_name: Release v1.0.0
+        body: ${{ steps.PR.outputs.pr_body }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: target/*.jar
+
   release:
     runs-on: ubuntu-latest
 #    if: ${{ vars.ENV == 'DEV' }}
