@@ -62,21 +62,21 @@ jobs:
       uses: 8BitJonny/gh-get-current-pr@2.2.0
       id: PR      
 
-    # - name: 'Get semver based on pr label'
-    #   id: semver1
-    #   uses: "snsinahub-org/semver@v3.0.0"
-    #   with:
-    #     type: "${{ steps.PR.outputs.pr_labels }}"
-    #     prefix: '' 
-    #     body: ${{ steps.PR.outputs.pr_body }}  
-    #     create-release: 'yes'
-    #     prerelease: 'no'
-    #     exit-on-missing-type: 'no'
-    #     files: |
-    #         target/*.jar
-    # - name: 'print version'
-    #   run: |
-    #     echo ${{ steps.semver1.outputs.version }}
+    - name: 'Get semver based on pr label'
+      id: semver1
+      uses: "snsinahub-org/semver@v3.0.0"
+      with:
+        type: "${{ steps.PR.outputs.pr_labels }}"
+        prefix: '' 
+        body: "${{ steps.PR.outputs.pr_body }}"  
+        create-release: 'yes'
+        prerelease: 'no'
+        exit-on-missing-type: 'no'
+        files: |
+            target/cicd-testing-v1-${{ env.version }}-mule-application.jar
+    - name: 'print version'
+      run: |
+        echo ${{ steps.semver1.outputs.version }}
 
     # - name: create-release
     #   id: create_release
@@ -113,17 +113,17 @@ jobs:
     #   run: |
     #     gh release create $GITHUB_REF_NAME ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title="${{ env.version }}" --generate-notes
 
-    - name: Generate Changelog
-      run: |
-        mkdir temp
-        echo "${{ steps.PR.outputs.pr_body }}" > temp/CHANGELOG.txt
-    - name: Release
-      uses: softprops/action-gh-release@v2
-      with:
-        body_path: temp/CHANGELOG.txt
-        files: ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar
-        name: v${{ env.version }}
-        tag_name: ${{ github.ref_name }}
+    # - name: Generate Changelog
+    #   run: |
+    #     mkdir temp
+    #     echo "${{ steps.PR.outputs.pr_body }}" > temp/CHANGELOG.txt
+    # - name: Release
+    #   uses: softprops/action-gh-release@v2
+    #   with:
+    #     body_path: temp/CHANGELOG.txt
+    #     files: ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar
+    #     name: v${{ env.version }}
+    #     tag_name: ${{ github.ref_name }}
 
   release:
     runs-on: ubuntu-latest
