@@ -1,7 +1,11 @@
 name: deployment-dev
 on:
   push:
-
+   branches:
+    - develop
+    - cicd-qa
+    - cicd-sit
+    - cicd-prod
 jobs:
   deployment:
     name: build-and-deploy-project
@@ -33,7 +37,7 @@ jobs:
     - name: Replaceenvironmentvariablesinfile
       run: |
           echo "Replacing API_URL in config.json"
-          sed -i 's#\${{API_URL}}#'"${{ secrets.API_URL }}"'#g' config.json
+          sed -i 's#\${API_URL}#'"${{ vars.API_URL }}"'#g' config.json
           
     - name: Showupdatedconfig
       run: cat config.json
