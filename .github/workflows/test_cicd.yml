@@ -19,7 +19,7 @@ jobs:
         mvn --version
     - name: Installxmllint
       run: |
-        apt-get install -y libxml2-utils
+        sudo apt-get install -y libxml2-utils
     - name: ExtractversionfromXML
       run: |
         VERSION=$(xmllint --xpath "string(//*[local-name()='project']/*[local-name()='version'])" pom.xml)
