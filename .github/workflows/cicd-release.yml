@@ -6,11 +6,14 @@ on:
       environment:
         required: true
         type: string
+      release:
+        required: true
+        type: string
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    environment:  ${{ inputs.environment }}"
+    environment:  ${{ inputs.environment }}
     steps:
       
       - name: Create release
@@ -20,8 +23,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "The version extracted from XML is ${{ env.version }}"
-#          gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "Init Release" --generate-notes
+          gh release create ${{ inputs.release }} ./target/cicd-testing-v1-${{ inputs.release }}-mule-application.jar --title "${{ inputs.release }}" --generate-notes
           
-      - name: init-release
-        if: ${{ vars.ENV == 'DEV' }}
-        run: echo 'Release ${{ needs.deployment.outputs.version_number }} to ${{ vars.ENV }} is successful!'
+      # - name: init-release
+      #   if: ${{ vars.ENV == 'DEV' }}
+      #   run: echo 'Release ${{ needs.deployment.outputs.version_number }} to ${{ vars.ENV }} is successful!'
