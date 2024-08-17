@@ -99,10 +99,11 @@ jobs:
     #     upload_url: ${{ steps.create_release.outputs.upload_url }} 
     #     asset_path: target/*.jar
     - name: AuthenticatewithGitHubCLI
-#      env:
+      env:
 #        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-#        GH_TOKEN: ${{ github.token }}
+        GH_TOKEN: ${{ github.token }}
       run: |
+          gh auth login --with-token
           gh auth status
     - name: Create release
       env:
