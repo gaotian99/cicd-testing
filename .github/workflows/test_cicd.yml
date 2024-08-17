@@ -64,9 +64,9 @@ jobs:
     #     ls target/
     #     echo 'Deployment to DEV is successful!'
     
-    # - name: get-pr-information
-    #   uses: 8BitJonny/gh-get-current-pr@2.2.0
-    #   id: PR      
+    - name: get-pr-information
+      uses: 8BitJonny/gh-get-current-pr@2.2.0
+      id: PR      
 
     # - name: 'Get semver based on pr label'
     #   id: semver1
@@ -120,8 +120,8 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo v${{ env.version }}
-#         gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "${{ env.version }}" --notes "${{ steps.PR.outputs.pr_body }}"    
-#        gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "Init Release" --generate-notes
+         gh release create ${{ env.version }} ./target/*.jar --title "${{ env.version }}" --notes "${{ steps.PR.outputs.pr_body }}"    
+#         gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "Init Release" --generate-notes
         
     # - name: Generate Changelog
     #   run: |
