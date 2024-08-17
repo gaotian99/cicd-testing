@@ -148,4 +148,5 @@ jobs:
     with:
       environment: DEV
       release: ${{ needs.deployment.outputs.version_number }}
-    
+    permissions:
+      contents: write    
