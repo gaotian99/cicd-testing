@@ -12,6 +12,7 @@ on:
 
 jobs:
   release:
+    name: post-jar-to-release-page
     runs-on: ubuntu-latest
     environment:  ${{ inputs.environment }}
     permissions:
@@ -23,7 +24,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ls 
-          ls target
-          ls staging
+#          ls target
+#          ls staging
 #          gh release create ${{ inputs.release }} ./target/cicd-testing-v1-${{ inputs.release }}-mule-application.jar --title "${{ inputs.release }}" --generate-notes
 
