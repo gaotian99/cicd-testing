@@ -21,14 +21,18 @@ jobs:
       run: |
         sudo apt-get install -y libxml2-utils
     - name: ExtractversionfromXML
+      id: app_version
       run: |
         VERSION=$(xmllint --xpath "string(//*[local-name()='project']/*[local-name()='version'])" pom.xml)
         echo "Extracted version: $VERSION"
+        echo "::set-output name=version::$VERSION"
     - name: build-package
       run: |
         mkdir target
         echo 'not a real jar' > target/cicd-testing-v1-1.0.3-mule-application.jar
         echo "Extracted version: $VERSION"
+        echo "new...."
+        echo "The version extracted from XML is ${{ steps.extract_version.outputs.version }}"
     - name: deploy-to-dev
       run: |
         ls target/
