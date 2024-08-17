@@ -54,29 +54,30 @@ jobs:
         echo "Extracted version: $VERSION"
         echo "new...."
         echo "The version extracted from XML is ${{ env.version }}"
-    - name: deploy-to-dev
-      run: |
-        ls target/
-        echo 'Deployment to DEV is successful!'
-    - name: get-pr-information
-      uses: 8BitJonny/gh-get-current-pr@2.2.0
-      id: PR      
 
-    - name: 'Get semver based on pr label'
-      id: semver1
-      uses: "snsinahub-org/semver@v3.0.0"
-      with:
-        type: "${{ steps.PR.outputs.pr_labels }}"
-        prefix: '' 
-        body: "${{ steps.PR.outputs.pr_body }}"  
-        create-release: 'yes'
-        prerelease: 'no'
-        exit-on-missing-type: 'no'
-        files: |
-            target/cicd-testing-v1-${{ env.version }}-mule-application.jar
-    - name: 'print version'
-      run: |
-        echo ${{ steps.semver1.outputs.version }}
+    # - name: deploy-to-dev
+    #   run: |
+    #     ls target/
+    #     echo 'Deployment to DEV is successful!'
+    # - name: get-pr-information
+    #   uses: 8BitJonny/gh-get-current-pr@2.2.0
+    #   id: PR      
+
+    # - name: 'Get semver based on pr label'
+    #   id: semver1
+    #   uses: "snsinahub-org/semver@v3.0.0"
+    #   with:
+    #     type: "${{ steps.PR.outputs.pr_labels }}"
+    #     prefix: '' 
+    #     body: "${{ steps.PR.outputs.pr_body }}"  
+    #     create-release: 'yes'
+    #     prerelease: 'no'
+    #     exit-on-missing-type: 'no'
+    #     files: |
+    #         target/cicd-testing-v1-${{ env.version }}-mule-application.jar
+    # - name: 'print version'
+    #   run: |
+    #     echo ${{ steps.semver1.outputs.version }}
 
     # - name: create-release
     #   id: create_release
@@ -106,13 +107,15 @@ jobs:
     #   run: |
     #       gh auth login --with-token
     #       gh auth status
-    # - name: Create release
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #     GITHUB_REF_NAME: ${{ github.ref_name }}
-    #   run: |
-    #     gh release create $GITHUB_REF_NAME ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title="${{ env.version }}" --generate-notes
 
+    - name: Create release
+      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        GITHUB_REF_NAME: ${{ github.ref_name }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --generate-notes
+        
     # - name: Generate Changelog
     #   run: |
     #     mkdir temp
