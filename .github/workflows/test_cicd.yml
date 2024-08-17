@@ -123,6 +123,7 @@ jobs:
         body_path: temp/CHANGELOG.txt
         files: ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar
         name: v${{ env.version }}
+        tag_name: ${{ github.ref_name }}
 
   release:
     runs-on: ubuntu-latest
