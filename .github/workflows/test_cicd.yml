@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ vars.ENV == 'DEV' }}
     needs: deployment
-    environment: dev
+    environment: DEV
     steps:
       - run: echo 'Release ${{ needs.deployment.outputs.version_number }} to ${{ vars.ENV }} is successful!'
         
