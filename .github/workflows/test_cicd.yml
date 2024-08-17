@@ -110,13 +110,13 @@ jobs:
     #       gh auth login --with-token
     #       gh auth status
 
-    - name: Create release
-      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        GITHUB_REF_NAME: ${{ github.ref_name }}
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "Init Release" --generate-notes
+#     - name: Create release
+#       env:
+# #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# #        GITHUB_REF_NAME: ${{ github.ref_name }}
+#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       run: |
+#         gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "Init Release" --generate-notes
         
     # - name: Generate Changelog
     #   run: |
@@ -130,13 +130,20 @@ jobs:
     #     name: v${{ env.version }}
     #     tag_name: ${{ github.ref_name }}
 
+  # release:
+  #   runs-on: ubuntu-latest
+  #   if: ${{ vars.ENV == 'DEV' }}
+  #   needs: deployment
+  #   environment: DEV
+  #   steps:
+  #     - name: init-release
+  #       if: ${{ vars.ENV == 'DEV' }}
+  #       run: echo 'Release ${{ needs.deployment.outputs.version_number }} to ${{ vars.ENV }} is successful!'
+
   release:
-    runs-on: ubuntu-latest
-    if: ${{ vars.ENV == 'DEV' }}
     needs: deployment
-    environment: DEV
-    steps:
-      - name: init-release
-        if: ${{ vars.ENV == 'DEV' }}
-        run: echo 'Release ${{ needs.deployment.outputs.version_number }} to ${{ vars.ENV }} is successful!'
-        
+    uses: ./.github/workflows/cicd-release.yml
+    with:
+      environment: DEV
+      release: ${{ env.version }}
+    
