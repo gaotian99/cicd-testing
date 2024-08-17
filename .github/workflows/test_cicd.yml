@@ -58,9 +58,9 @@ jobs:
       run: |
         ls target/
         echo 'Deployment to DEV is successful!'
-    # - name: get-pr-information
-    #   uses: 8BitJonny/gh-get-current-pr@2.2.0
-    #   id: PR      
+    - name: get-pr-information
+      uses: 8BitJonny/gh-get-current-pr@2.2.0
+      id: PR      
 
     # - name: 'Get semver based on pr label'
     #   id: semver1
@@ -98,19 +98,31 @@ jobs:
     #   with:
     #     upload_url: ${{ steps.create_release.outputs.upload_url }} 
     #     asset_path: target/*.jar
-    - name: AuthenticatewithGitHubCLI
-      env:
-#        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        GH_TOKEN: ${{ github.token }}
+    
+    # - name: AuthenticatewithGitHubCLI
+    #   env:
+    #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    #     GH_TOKEN: ${{ github.token }}
+    #   run: |
+    #       gh auth login --with-token
+    #       gh auth status
+    # - name: Create release
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #     GITHUB_REF_NAME: ${{ github.ref_name }}
+    #   run: |
+    #     gh release create $GITHUB_REF_NAME ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title="${{ env.version }}" --generate-notes
+
+    - name: Generate Changelog
       run: |
-          gh auth login --with-token
-          gh auth status
-    - name: Create release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GITHUB_REF_NAME: ${{ github.ref_name }}
-      run: |
-        gh release create $GITHUB_REF_NAME ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title="${{ env.version }}" --generate-notes
+        mkdir temp
+        echo ${{ steps.PR.outputs.pr_body }} > temp/CHANGELOG.txt
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+        body_path: temp/CHANGELOG.txt
+        files: ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar
+        name: v${{ env.version }}
 
   release:
     runs-on: ubuntu-latest
