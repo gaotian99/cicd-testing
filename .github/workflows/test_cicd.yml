@@ -145,5 +145,5 @@ jobs:
     uses: ./.github/workflows/cicd-release.yml
     with:
       environment: DEV
-      release: ${{ env.version }}
+      release: ${{ needs.deployment.outputs.version_number }}
     
