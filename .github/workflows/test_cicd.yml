@@ -80,7 +80,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         release_name: Release v1.0.0
-        body: ${{ steps.PR.outputs.pr_body }}
+        body: |
+          ${{ steps.PR.outputs.pr_body }}
         tag_name: ${{ github.ref }}
         draft: false
         prerelease: false
