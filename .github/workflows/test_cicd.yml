@@ -19,8 +19,8 @@ jobs:
       }}
     outputs:
       version_number: ${{ env.version }}
-#    permissions:
-#      contents: write
+    permissions:
+      contents: write
       
     steps:
     
@@ -63,9 +63,10 @@ jobs:
     #   run: |
     #     ls target/
     #     echo 'Deployment to DEV is successful!'
-    # - name: get-pr-information
-    #   uses: 8BitJonny/gh-get-current-pr@2.2.0
-    #   id: PR      
+    
+    - name: get-pr-information
+      uses: 8BitJonny/gh-get-current-pr@2.2.0
+      id: PR      
 
     # - name: 'Get semver based on pr label'
     #   id: semver1
@@ -112,13 +113,14 @@ jobs:
     #       gh auth login --with-token
     #       gh auth status
 
-#     - name: Create release
-#       env:
-# #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-# #        GITHUB_REF_NAME: ${{ github.ref_name }}
-#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       run: |
-#         gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "Init Release" --generate-notes
+    - name: Create release
+      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        GITHUB_REF_NAME: ${{ github.ref_name }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+         gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "${{ env.version }}" --notes "${{ steps.PR.outputs.pr_body }}"    
+#        gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "Init Release" --generate-notes
         
     # - name: Generate Changelog
     #   run: |
@@ -142,11 +144,11 @@ jobs:
   #       if: ${{ vars.ENV == 'DEV' }}
   #       run: echo 'Release ${{ needs.deployment.outputs.version_number }} to ${{ vars.ENV }} is successful!'
 
-  release:
-    needs: deployment
-    uses: ./.github/workflows/cicd-release.yml
-    with:
-      environment: DEV
-      release: ${{ needs.deployment.outputs.version_number }}
-    permissions:
-      contents: write    
+  # release:
+  #   needs: deployment
+  #   uses: ./.github/workflows/cicd-release.yml
+  #   with:
+  #     environment: DEV
+  #     release: ${{ needs.deployment.outputs.version_number }}
+  #   permissions:
+  #     contents: write    
