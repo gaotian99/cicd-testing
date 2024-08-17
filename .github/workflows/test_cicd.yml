@@ -101,8 +101,9 @@ jobs:
     - name: AuthenticatewithGitHubCLI
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#        GH_TOKEN: ${{ github.token }}
       run: |
-          echo $GITHUB_TOKEN | gh auth login --with-token
+          gh auth login --with-token
     - name: Create release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
