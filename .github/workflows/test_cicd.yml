@@ -113,6 +113,20 @@ jobs:
     #       gh auth login --with-token
     #       gh auth status
 
+    - name: grep-exchange-url
+      id: extract_url 
+      run: |
+        URL=$(grep -A 1 "Your asset has been successfully published" deploy_result.txt | grep -oP '(https?://[^\s]+)')
+        echo "Extracted URL: $URL"
+        echo "EXCHANGEURL=$URL" >> $GITHUB_ENV
+
+    - name: init-pr-note
+      run: |
+        mkdir pr_info
+        echo "${{ steps.PR.outputs.pr_body }}" | tee pr_info/pr_body.md
+        echo -e "\n# Exchange URL:\n${{ env.EXCHANGEURL }}\n" >> pr_info/pr_body.md
+        
+        
     - name: Create-release-${{github.ref_name}}- ${{ env.ENVIRONMENT }}
       env:
 #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -120,8 +134,9 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo v${{ env.version }}
-         gh release create ${{ env.version }} ./target/*.jar --title "${{ env.version }}" --notes "${{ steps.PR.outputs.pr_body }}"    
-#         gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "Init Release" --generate-notes
+          gh release create ${{ env.version }} ./target/*.jar --title "${{ env.version }}" --notes-file pr_info/pr_body.md
+#          gh release create ${{ env.version }} ./target/*.jar --title "${{ env.version }}" --notes "${{ steps.PR.outputs.pr_body }}"    
+#          gh release create ${{ env.version }} ./target/cicd-testing-v1-${{ env.version }}-mule-application.jar --title "Init Release" --generate-notes
         
     # - name: Generate Changelog
     #   run: |
