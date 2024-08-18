@@ -113,7 +113,19 @@ jobs:
     #       gh auth login --with-token
     #       gh auth status
 
-    - name: grep-exchange-url
+    - name: grep-exchange-url-1
+      id: extract_strings
+      run: |
+        STRINGS=$(grep -oP '\[INFO\] ------< \K[^:]+|(?<=:)[^ >]+' deploy_result.txt)
+        STRING1=$(echo "$STRINGS" | sed -n '1p')
+        STRING2=$(echo "$STRINGS" | sed -n '2p')
+        echo "Extracted STRING1: $STRING1"
+        echo "Extracted STRING2: $STRING2"
+        echo "STRING1=$STRING1" >> $GITHUB_ENV
+        echo "STRING2=$STRING2" >> $GITHUB_ENV
+        echo "MADEURL=https://anypoint.mulesoft.com/exchange/$STRING1/$STRING2/${{ env.version }}" >>
+
+    - name: grep-exchange-url-2
       id: extract_url 
       run: |
         URL=$(grep -A 1 "Your asset has been successfully published" deploy_result.txt | grep -oP '(https?://[^\s]+)')
@@ -124,7 +136,8 @@ jobs:
       run: |
         mkdir pr_info
         echo "${{ steps.PR.outputs.pr_body }}" | tee pr_info/pr_body.md
-        echo -e "\n# Exchange URL:\n${{ env.EXCHANGEURL }}\n" >> pr_info/pr_body.md
+        echo -e "\n# Exchange URL1:\n${{ env.EXCHANGEURL }}\n" >> pr_info/pr_body.md
+        echo -e "\n# Exchange URL2:\n${{ env.MADEURL }}\n" >> pr_info/pr_body.md
         
         
     - name: Create-release-${{github.ref_name}}- ${{ env.ENVIRONMENT }}
