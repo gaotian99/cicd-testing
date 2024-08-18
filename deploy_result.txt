@@ -5,6 +5,13 @@
 [INFO] Building cc-ddd-ping-eapi-v1 1.0.4
 [INFO] --------------------------[ mule-application ]--------------------------
 [INFO] 
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------< a178355d-b9a8-4eb7-a90e-8684e1d693af:dd-ddd-ping-eapi-v1 >------
+[INFO] Building cc-ddd-ping-eapi-v1 1.0.4
+[INFO] --------------------------[ mule-application ]--------------------------
+[INFO] 
 [INFO]   ------------------------------------------------------------
 [INFO]   Publication status: completed
 [INFO]   ------------------------------------------------------------
