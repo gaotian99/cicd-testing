@@ -1,0 +1,16 @@
+[INFO]   ------------------------------------------------------------
+[INFO]   Publication status: completed
+[INFO]   ------------------------------------------------------------
+[INFO]     Steps: 
+[INFO]     - Description: Publishing asset
+[INFO]     - Status: completed
+[INFO]     .........................................
+[INFO] 
+[INFO]   Your asset has been successfully published to Exchange.
+[INFO]   You can check it at: https://anypoint.mulesoft.com/exchange/f178355d-b9a8-4eb7-a90e-8684e1d693af/cc-ddd-ping-eapi-v1/1.0.4
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:14 min
+[INFO] Finished at: 2023-08-10T11:55:15-07:00
+[INFO] ------------------------------------------------------------------------
