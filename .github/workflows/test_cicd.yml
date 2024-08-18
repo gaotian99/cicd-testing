@@ -113,10 +113,14 @@ jobs:
     #       gh auth login --with-token
     #       gh auth status
 
+    - name: cat-file-to-file
+      run: |
+        cat deploy_result.txt | tee deploy.txt
+    
     - name: grep-exchange-url-1
       id: extract_strings
       run: |
-        STRINGS=$(grep -oP '\[INFO\] ------< \K[^:]+|(?<=:)[^ >]+' deploy_result.txt  | head -n 2)
+        STRINGS=$(grep -oP '\[INFO\] ------< \K[^:]+|(?<=:)[^ >]+' deploy.txt  | head -n 2)
         STRING1=$(echo "$STRINGS" | sed -n '1p')
         STRING2=$(echo "$STRINGS" | sed -n '2p')
         echo "Extracted STRING1: $STRING1"
@@ -128,7 +132,7 @@ jobs:
     - name: grep-exchange-url-2
       id: extract_url 
       run: |
-        URL=$(grep -A 1 "Your asset has been successfully published" deploy_result.txt | grep -oP '(https?://[^\s]+)')
+        URL=$(grep -A 1 "Your asset has been successfully published" deploy.txt | grep -oP '(https?://[^\s]+)')
         echo "Extracted URL: $URL"
         echo "EXCHANGEURL=$URL" >> $GITHUB_ENV
 
