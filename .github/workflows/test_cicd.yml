@@ -116,7 +116,7 @@ jobs:
     - name: grep-exchange-url-1
       id: extract_strings
       run: |
-        STRINGS=$(grep -oP '\[INFO\] ------< \K[^:]+|(?<=:)[^ >]+' deploy_result.txt)
+        STRINGS=$(grep -oP '\[INFO\] ------< \K[^:]+|(?<=:)[^ >]+' deploy_result.txt  | head -n 2)
         STRING1=$(echo "$STRINGS" | sed -n '1p')
         STRING2=$(echo "$STRINGS" | sed -n '2p')
         echo "Extracted STRING1: $STRING1"
