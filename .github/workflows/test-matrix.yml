@@ -2,8 +2,8 @@ name: Run with Multiple Parameters
 
 on:
   push:
-    branch:
-#      - feature/replace-text
+    branches:
+      - feature/something-else
 
 jobs:
   run-with-matrix:
