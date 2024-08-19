@@ -1,0 +1,19 @@
+name: Run with Multiple Parameters
+
+on:
+  push:
+    branch:
+      - feature/replace-text
+
+jobs:
+  run-with-matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        my_param: [param1, param2, param3]  # 这里定义了一个数组，包含多个参数
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run step with parameter
+        run: echo "Running with parameter: ${{ matrix.my_param }}"
