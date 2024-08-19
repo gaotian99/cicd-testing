@@ -16,4 +16,5 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run step with parameter
-        run: echo "Running with parameter: ${{ matrix.my_param }}"
+        run: |
+          echo "Running with parameter: ${{ matrix.my_param }}"
