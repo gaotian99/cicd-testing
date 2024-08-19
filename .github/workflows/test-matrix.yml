@@ -3,7 +3,7 @@ name: Run with Multiple Parameters
 on:
   push:
     branch:
-      - feature/replace-text
+#      - feature/replace-text
 
 jobs:
   run-with-matrix:
