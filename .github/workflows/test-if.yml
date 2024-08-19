@@ -1,0 +1,22 @@
+name: Run with Multiple Vars
+
+on:
+  push:
+    branches:
+      - feature/replace-text
+
+jobs:
+  test-var-if:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.0
+
+      - name: Run step with parameter
+        if: ${{ vars.TEST == 'test' }}
+        run: |
+          echo "Running with parameter: ${{ vars.TEST }}"
+
+      - name: Run step with parameter
+        run: |
+          echo "Done"
