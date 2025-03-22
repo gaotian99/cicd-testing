@@ -1,10 +1,20 @@
+:experimental:
+ifndef::env-github[:icons: font]
+ifdef::env-github,env-browser[]
+endif::[]
+ifdef::env-github[]
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
 :author: Plamen Totev
 :doctype: book
 :sectnums: |,all|
 :toc: left
 :toc-title: Context
 :sectnumlevels: 2
-:icons: font
 
 = Hello, Diagrams!
 
