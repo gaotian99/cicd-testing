@@ -30,6 +30,9 @@ Please note it
 [TIP]
 Something here
 
+[CAUTION]
+Something new
+
 GitHub recently added support for including https://github.com/mermaid-js/mermaid#readme[Mermaid] diagrams in Markdown files. The good news is that it works for AsciiDoc files as well. Here is an example:
 
 [source,mermaid]
