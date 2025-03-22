@@ -1,5 +1,24 @@
+:author: Plamen Totev
+:doctype: book
+:sectnums: |,all|
+:toc: left
+:toc-title: Context
+:sectnumlevels: 2
+:icons: font
+
 = Hello, Diagrams!
-Plamen Totev
+
+NOTE: Although you could enclose the alt text in single quotes to escape the comma, doing so implicitly enables substitutions.
+Unless you need substitutions to be applied to the alt text, prefer using double quotes as the enclosure.
+
+[NOTE]
+Thank you.
+
+[WARNING] 
+Please note it
+
+[TIP]
+Something here
 
 GitHub recently added support for including https://github.com/mermaid-js/mermaid#readme[Mermaid] diagrams in Markdown files. The good news is that it works for AsciiDoc files as well. Here is an example:
 
@@ -98,3 +117,4 @@ asciidoctorj {
 ----
 
 It would replace `[source,mermaid]` with `[mermaid]`. This way the same AsciiDoc file would look the same both in GitHub and in the generated HTML file.
+
