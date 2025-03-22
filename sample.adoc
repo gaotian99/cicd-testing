@@ -27,3 +27,21 @@ graph TD
 == 结论
 通过使用 Mermaid，您可以在 AsciiDoc 文档中轻松嵌入动态生成的流程图。这对于技术文档、流程说明或系统设计非常有用。
 说明
+
+# 🚀 Salesforce & MuleSoft 项目
+
+## ☁️ Salesforce CRM
+- 🔑 认证方式: OAuth 2.0
+- 📂 主要对象: Account, Contact, Opportunity
+- 📞 Service Cloud 支持电话工单分配
+- 🔄 Workflow 规则: 自动更新客户状态
+
+## 🔌 MuleSoft API 集成
+- 🧩 连接 SAP, Salesforce, Oracle DB
+- 🌐 API 托管在 AnyPoint Platform
+- 🔥 HTTP 触发器监听 /customer/{id} 请求
+- 🔒 采用 OAuth 2.0 和 JWT 认证
+
+## 📊 监控与日志
+- 📊 使用 Anypoint Monitoring 监控 API 访问
+- ⚡ 批量处理 10,000+ 数据记录
