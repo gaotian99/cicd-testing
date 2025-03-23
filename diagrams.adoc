@@ -44,6 +44,15 @@ sequenceDiagram
     Bob-->>Alice: Great!
 ....
 
+[source,mermaid]
+----
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>Bob: Hello Bob, how are you?
+    Bob-->>Alice: Great!
+----
+
 The catch? The way it works for AsciiDoc is similar to how it works for Markdown. Here is the source code for the above diagram:
 
 [source,asciidoc]
